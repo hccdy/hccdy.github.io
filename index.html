@@ -12,7 +12,6 @@
 		<style>
 			body{
 				background-color: #eee;
-				overflow: hidden;
 			}
 			canvas{
 				background-color: #eee;
@@ -20,8 +19,8 @@
 				position : absolute;
 				left: 0;
 				top: 0;
-				display: block;
 				margin: 0 auto;
+				display: block
 			}
 			.title{font-size:60px;color:white}
 			.title2{font-size:40px;color:orange}
@@ -35,7 +34,7 @@
 		<script type="text/javascript">
 			var canvas=document.getElementById("canv");
 			var wid=window.innerWidth;
-			var hei=window.innerHeight;
+			var hei=window.outerHeight;
 			canvas.width=wid;
 			canvas.height=hei;
 			var $=canvas.getContext("2d");
