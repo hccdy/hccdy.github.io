@@ -4,7 +4,71 @@
 		<meta charset="UTF-8">
 		<title>CJC's Midi Counter Generator</title>
 		<link rel="icon" href="icons/cjcmcg.ico" type="image/x-icon" />
+		<style>
+			body{
+				background-color:#eee
+			}
+			canvas{
+				background-color: #eee;
+				z-index: -1;
+				position : absolute;
+				left: 0;
+				top: 0;
+				margin: 0 auto;
+				display: block
+			}
+			.title{font-size:60px;color:white}
+			.title2{font-size:45px;color:orange}
+			.title3{font-size:30px;color:chartreuse}
+			.texts{font-size:20px;color:yellow;width:1000px;margin:0 auto}
+			.textt{font-size:15px;color:deepskyblue;width:800px;margin:0 auto}
+		</style>
 	</head>
 	<body>
+		<canvas id="canv"></canvas>
+		<h1 class="title" align="center">CJC's Midi Counter Generator</h1>
+		
+		<script type="text/javascript">
+			var canvas=document.getElementById("canv");
+			var wid=window.innerWidth;
+			var hei=document.documentElement.scrollHeight;
+			canvas.width=wid;
+			canvas.height=hei;
+			var $=canvas.getContext("2d");
+			var colors=["darkred","darkmagenta","darkblue","darkslategrey","darkgoldenrod"];
+			var falls=[];
+			
+			function step(){
+				$.clearRect(0,0,wid,hei);
+				var grd=$.createLinearGradient(0,0,0,hei);
+				grd.addColorStop(0,"darkgreen");
+				grd.addColorStop(1,"black");
+				$.fillStyle=grd;
+				$.fillRect(0,0,wid,hei);
+				if(Math.random()>0.3){
+					//Generate a new fall
+					var x=Math.random()*wid;
+					var y=0;
+					var sy=Math.random()*5+5;
+					var color=Math.floor(Math.random()*4.9);
+					falls.push({x:x,y:y,sy:sy,color:color});
+				}
+				for(var i=0;i<falls.length;i++){
+					falls[i].y+=falls[i].sy;
+					if(falls[i].y>hei+50){
+						falls.splice(i,1);
+						i--;
+						continue;
+					}
+					var gr2=$.createLinearGradient(0,falls[i].y-50,0,falls[i].y);
+					gr2.addColorStop(0,"transparent");
+					gr2.addColorStop(1,colors[falls[i].color]);
+					$.fillStyle=gr2;
+					$.fillRect(falls[i].x,falls[i].y-50,3,50);
+				}
+				requestAnimationFrame(step);
+			}
+			requestAnimationFrame(step);
+		</script>
 	</body>
 </html>
